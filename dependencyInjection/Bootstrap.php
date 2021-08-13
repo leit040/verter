@@ -10,6 +10,8 @@ use app\repositories\ARMyObject;
 use app\repositories\ARTask;
 use app\repositories\MyObjectRepository;
 use app\repositories\TaskRepository;
+use app\useCase\MyObjectManagementService;
+use app\useCase\TaskManagementService;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemWriter;
 use League\Flysystem\Local\LocalFilesystemAdapter;
@@ -21,6 +23,9 @@ final class Bootstrap implements BootstrapInterface
     public function bootstrap($app)
     {
         $container = \Yii::$container;
+        $container->setSingleton(TransactionManager::class);
+        $container->setSingleton(MyObjectManagementService::class);
+        $container->setSingleton(TaskManagementService::class);
         $container->setSingleton(TaskRepository::class,ARTask::class);
         $container->setSingleton(MyObjectRepository::class,ARMyObject::class);
         $container->setSingleton(Filesystem::class, function () {

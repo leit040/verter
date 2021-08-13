@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -68,7 +69,7 @@ class Task extends \yii\db\ActiveRecord
         return [
             'id',
             'name',
-            'taskList'=>'task_list'
+            'tasksList'=>'task_list'
         ];
     }
 
@@ -81,10 +82,10 @@ class Task extends \yii\db\ActiveRecord
         return $model;
 
     }
-    public function updateData(string $name, string $taskList)
+    public function updateData(string $name, string $tasksList,int $objectId)
     {
         $this->name = $name;
-        $this->task_list = $taskList;
+        $this->task_list = $tasksList;
     }
 
 }

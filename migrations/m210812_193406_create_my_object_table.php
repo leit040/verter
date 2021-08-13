@@ -29,15 +29,15 @@ class m210812_193406_create_my_object_table extends Migration
             'parent_id'
         );
 
-        // add foreign key for table `{{%my_object}}`
-        $this->addForeignKey(
-            '{{%fk-my_object-parent_id}}',
-            '{{%my_object}}',
-            'parent_id',
-            '{{%my_object}}',
-            'id',
-            'CASCADE'
-        );
+//        // add foreign key for table `{{%my_object}}`
+//        $this->addForeignKey(
+//            '{{%fk-my_object-parent_id}}',
+//            '{{%my_object}}',
+//            'parent_id',
+//            '{{%my_object}}',
+//            'id',
+//            'CASCADE'
+//        );
     }
 
     /**

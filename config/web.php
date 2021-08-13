@@ -10,11 +10,15 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@app' => \dirname(__DIR__) . '/',
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'YDdM84ZJfOO0ZjNY2XTY6bRfySLKWc5j',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -48,6 +52,14 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'GET api/v1/objects/list' => 'api/index',
+                'GET api/v1/objects/<id:\d+>' => 'api/view',
+                'POST api/v1/objects/create' => 'api/create',
+                'PUT api/v1/objects/update/<id:\d+>' => 'api/update',
+                'DELETE api/v1/objects/delete/<id:\d+>' => 'api/delete',
+
+
+
             ],
         ],
 

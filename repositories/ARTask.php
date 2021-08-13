@@ -28,4 +28,9 @@ class ARTask implements TaskRepository
     {
        Task::deleteAll(['id' => $task->id]);
     }
+
+    public function findById($id): ?Task
+    {
+        return Task::findOne($id);
+    }
 }

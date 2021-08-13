@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace app\models;
 
 use Yii;
@@ -12,7 +12,7 @@ use Yii;
  * @property string $image_path
  * @property int|null $parent_id
  *
- * @property MyObject $my_objects
+ * @property MyObject[] $myObjects
  * @property Task[] $tasks
  */
 class MyObject extends \yii\db\ActiveRecord
@@ -86,6 +86,13 @@ class MyObject extends \yii\db\ActiveRecord
             'id',
             'name',
             'imagePath'=>'image_path',
+            'tasks'=>function(){
+                return $this->tasks;
+            },
+            'childObject'=>function(){
+                return $this->myObjects;
+            },
+
 
         ];
     }
@@ -94,10 +101,10 @@ class MyObject extends \yii\db\ActiveRecord
     {
         return [
         'childObject'=>function(){
-      return $this->getMyObjects();
+      return $this->my_objects;
     },
             'tasks'=>function(){
-            return $this->getTasks();
+            return $this->tasks;
             }
 
     ];

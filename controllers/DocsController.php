@@ -14,11 +14,16 @@ final class DocsController extends BaseController
      */
     public function actionJson(): string
     {
-        $openapi = Generator::scan([\Yii::getAlias('@app')]);
-        \Yii::$app->getResponse()->format = Response::FORMAT_RAW;
-        \Yii::$app->getResponse()->getHeaders()->set('Content-Type', 'application/json');
+        $openapi = Generator::scan([\Yii::getAlias('@app')]) ;
+            \Yii::$app->getResponse()->format = Response::FORMAT_RAW;
+            \Yii::$app->getResponse()->getHeaders()->set('Content-Type', 'application/json');
 
-        return $openapi->toJson();
+//            return $openapi->toJson();
+
+
+
+            return "Error!!!";
+
     }
 
     protected function verbs(): array

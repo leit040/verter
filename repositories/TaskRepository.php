@@ -11,5 +11,6 @@ interface TaskRepository
 
   public function delete(Task $task):void;
 
+  public function findById($id):?Task;
 
 }

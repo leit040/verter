@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filesystem;
+namespace app\filesystem;
 
 use yii\web\UrlManager;
 

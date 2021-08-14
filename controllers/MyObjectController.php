@@ -2,9 +2,16 @@
 
 namespace app\controllers;
 
+use app\Filesystem\UrlGenerator;
+use app\forms\MyObjectForm;
+use app\forms\TaskForm;
 use app\models\MyObject;
 use app\models\service\MyObjectSearch;
 use app\repositories\MyObjectRepository;
+use app\useCase\MyObjectManagementService;
+use Yii;
+use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -54,7 +61,7 @@ class MyObjectController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id,MyObjectRepository $myObjectRepository): string
+    public function actionView(int $id, MyObjectRepository $myObjectRepository): string
     {
         return $this->render('view', [
             'model' => $myObjectRepository->findById($id),
@@ -66,20 +73,30 @@ class MyObjectController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate(MyObjectManagementService $myObjectManagementService)
     {
-        $model = new MyObject();
+        $form = new MyObjectForm;
+        $tasks2 =  [ new TaskForm];
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+           $form->load(Yii::$app->getRequest()->getBodyParams());
+
+        if (\Yii::$app->getRequest()->getBodyParam('TaskForm') !== null) {
+            $form->tasks = ArrayHelper::getColumn(\Yii::$app->getRequest()->getBodyParam('TaskForm'), function ($arrayData) {
+                return new TaskForm($arrayData);
+            });
         }
 
-        return $this->render('create', [
-            'model' => $model,
+        if ($form->validate()) {
+            $model = $myObjectManagementService->save($form);
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        }
+        $myObjects = MyObject::find()->all();
+            return $this->render('create', [
+            'model' => $form,
+            'myObjects' => $myObjects,
+            'tasks2' => (empty($tasks2)) ? [new TaskForm()] : $tasks2
         ]);
     }
 
@@ -131,5 +148,10 @@ class MyObjectController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function load(Model $model)
+    {
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
     }
 }

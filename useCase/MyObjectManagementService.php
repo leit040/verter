@@ -6,6 +6,7 @@ namespace app\useCase;
 
 
 
+use app\filesystem\UrlGenerator;
 use app\forms\MyObjectForm;
 use app\models\MyObject;
 use app\models\TransactionManager;
@@ -20,17 +21,19 @@ final class MyObjectManagementService
     private MyObjectRepository $myObjectRepository;
     private TaskRepository $taskRepository;
     private TaskManagementService $taskManagementService;
+    private UrlGenerator $urlGenerator;
 
 
 
 
     public function __construct(TransactionManager $transactionManager, MyObjectRepository $myObjectRepository,
-                                 TaskRepository $taskRepository,TaskManagementService $taskManagementService)
+                                 TaskRepository $taskRepository,TaskManagementService $taskManagementService,UrlGenerator $urlGenerator)
     {
         $this->transactionManager = $transactionManager;
         $this->myObjectRepository = $myObjectRepository;
         $this->taskRepository = $taskRepository;
         $this->taskManagementService = $taskManagementService;
+        $this->urlGenerator = $urlGenerator;
 
     }
 
@@ -38,7 +41,7 @@ final class MyObjectManagementService
     {
 
 
-        $myObject = MyObject::create($form->name, $form->imagePath, $form->parentId);
+        $myObject = MyObject::create($form->name, $this->urlGenerator->getPublicUrl($form->imagePath), $form->parentId);
         $this->transactionManager->wrap(function () use ($myObject,$form) {
             $this->myObjectRepository->store($myObject);
 

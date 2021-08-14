@@ -29,9 +29,9 @@ class ApiController extends BaseController
 
     /**
      * @OA\Get(
-     *     path="/myobjects/list",
+     *     path="/my-objects/list",
      *     tags={"MyObjects"},
-     *     summary="Get Myobjects",
+     *     summary="Get MyObjects",
      *     @OA\Response(
      *         response=200,
      *         description="successful operation",
@@ -54,7 +54,7 @@ class ApiController extends BaseController
     /**
      * @OA\Get(
      *     path="/myobjekts/view",
-     *     tags={"MyOObjects"},
+     *     tags={"MyObjects"},
      *     summary="Get specific MyObject",
      *     @OA\Response(
      *         response=200,
@@ -92,16 +92,16 @@ class ApiController extends BaseController
     /**
      * @OA\Post(
      *     path="/MyObject/create",
-     *     tags={"MyObject"},
-     *     summary="Create MyObject member",
+     *     tags={"MyObjects"},
+     *     summary="Create MyObject ",
      *     @OA\Response(
      *         response=200,
      *         description="successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/MyObject")),
+     *          @OA\JsonContent(ref="#/components/schemas/MyObjectForm")),
      *     @OA\RequestBody(
      *         description="Requested body",
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/MyObjectCreateForm"),
+     *         @OA\JsonContent(ref="#/components/schemas/MyObject"),
      *     )
      * )
      */
@@ -128,6 +128,32 @@ class ApiController extends BaseController
     }
 
 
+    /**
+     * @OA\Put(
+     *     path="/MyObject/update",
+     *     tags={"MyObjects"},
+     *     summary="Update MyObject ",
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/MyObject")),
+     *     @OA\RequestBody(
+     *         description="Requested body",
+     *         required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/MyObjectForm")),
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="MyObject id",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     )
+     * )
+     */
+
     public function actionUpdate(int $id, MyObjectManagementService $myObjectManagementService, MyObjectRepository $myObjectRepository): MyObjectForm|MyObject
     {
 
@@ -148,6 +174,27 @@ class ApiController extends BaseController
 
     }
 
+    /**
+     * @OA\Delete (
+     *     path="/MyObject/delete",
+     *     tags={"MyObjects"},
+     *     summary="Update MyObject ",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="MyObject id",
+     *         required=true,
+     *         explode=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="successful operation"
+     *     )
+     * )
+     */
 
     public function actionDelete(int $id, MyObjectRepository $myObjectRepository): EmptyResponse
     {

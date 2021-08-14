@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\service\MyObjectSearch */
@@ -28,8 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'image_path',
-            'parent_id',
+            [
+                'label' => 'Image',
+                'format' => 'raw',
+                'value' => function($data){
+                    return Html::img($data->image_path,[
+                        'alt'=>'No image',
+                        'style' => 'width:150px;'
+                    ]);
+                },
+            ],
+            ['label' =>'Parent Object','value' =>'parent.name'],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

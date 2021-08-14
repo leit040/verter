@@ -32,6 +32,9 @@ abstract class BaseController extends Controller
     public function behaviors()
     {
         return [
+            'cors' => [
+                'class' => Cors::class,
+            ],
             'contentNegotiator' => [
                 'class' => ContentNegotiator::class,
                 'formats' => [
@@ -42,9 +45,7 @@ abstract class BaseController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => $this->verbs(),
             ],
-            'cors' => [
-                'class' => Cors::class,
-            ],
+
         ];
     }
 

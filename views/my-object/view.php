@@ -34,9 +34,37 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'image_path',
-            'parent_id',
+            [
+                'label' => 'Image',
+                'format' => 'raw',
+                'value' => function($data){
+                    return Html::img($data->image_path,[
+                        'alt'=>'No image',
+                        'style' => 'width:300px;'
+                    ]);
+                },
+            ],
+            ['label' =>'Parent Object','value' =>$model->parent->name],
+
         ],
     ]) ?>
 
+    <?php
+    foreach ($model->tasks as $task){
+        echo DetailView::widget([
+            'model' => $task,
+            'attributes' => [
+                'id',
+                'name',
+                'task_list'
+
+
+            ],
+        ]);
+
+    }
+    ?>
+
 </div>
+
+

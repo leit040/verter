@@ -52,7 +52,7 @@ public ?int $myObjectId = 0;
             [['tasksList'], 'safe'],
             [['myObjectId'], 'integer'],
             [['name'], 'string', 'max' => 512],
-            [['myObjectId'], 'exist', 'skipOnError' => true, 'targetClass' => MyObject::class, 'targetAttribute' => ['myObjectId' => 'id']],
+       //     [['myObjectId'], 'exist', 'skipOnError' => true, 'targetClass' => MyObject::class, 'targetAttribute' => ['myObjectId' => 'id']],
         ];
     }
 

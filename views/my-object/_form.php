@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'imagePath')->textInput(['maxlength' => true]) ?>
 
-
+    <?= $form->field($model, 'imagePath')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'parentId')->dropDownList(
         \yii\helpers\ArrayHelper::map($myObjects, 'id', 'name'),
